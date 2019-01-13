@@ -79,7 +79,6 @@ sub fetch {
     my $url = $self->base . '/'. $args{mbid} . '/'. $args{endpoint};
     $url .= '?' . $query
         if $query;
-warn(__PACKAGE__,' ',__LINE__," MARK: ",$url,"\n");
 
     my $tx = $self->ua->get($url);
 
