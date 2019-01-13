@@ -2,7 +2,7 @@ package WebService::AcousticBrainz;
 
 # ABSTRACT: Access to the AcousticBrainz API
 
-our $VERSION = '0.0200';
+our $VERSION = '0.0300';
 
 use Moo;
 use strictures 2;
@@ -12,6 +12,7 @@ use Carp;
 use Mojo::UserAgent;
 use Mojo::JSON::MaybeXS;
 use Mojo::JSON qw( decode_json );
+use Mojo::URL;
 
 =head1 SYNOPSIS
 
@@ -36,8 +37,18 @@ The base URL.  Default: https://acousticbrainz.org/api/v1
 =cut
 
 has base => (
-    is      => 'ro',
-    default => sub { 'https://acousticbrainz.org/api/v1' },
+    is      => 'rw',
+    default => sub { Mojo::URL->new('https://acousticbrainz.org/api/v1') },
+);
+
+=head2 ua
+ 
+The user agent.
+=cut
+
+has ua => (
+    is      => 'rw',
+    default => sub { Mojo::UserAgent->new() },
 );
 
 =head1 METHODS
@@ -68,10 +79,9 @@ sub fetch {
     my $url = $self->base . '/'. $args{mbid} . '/'. $args{endpoint};
     $url .= '?' . $query
         if $query;
+warn(__PACKAGE__,' ',__LINE__," MARK: ",$url,"\n");
 
-    my $ua = Mojo::UserAgent->new;
-
-    my $tx = $ua->get($url);
+    my $tx = $self->ua->get($url);
 
     my $data = _handle_response($tx);
 
