@@ -17,9 +17,11 @@ use Mojo::URL;
 =head1 SYNOPSIS
 
   use WebService::AcousticBrainz;
+
   my $w = WebService::AcousticBrainz->new;
+
   my $r = $w->fetch(
-    mbid     => '96685213-a25c-4678-9a13-abd9ec81cf35',
+    mbid     => 'c51f788f-f2ac-4d4e-aa72-205f002b8752',
     endpoint => 'low-level',
     query    => { n => 2 },
   );
@@ -55,7 +57,7 @@ has ua => (
 
 =head2 new()
 
-  $x = WebService::AcousticBrainz->new;
+  $w = WebService::AcousticBrainz->new;
 
 Create a new C<WebService::AcousticBrainz> object.
 
@@ -63,8 +65,8 @@ Create a new C<WebService::AcousticBrainz> object.
 
   $r = $w->fetch(%arguments);
 
-Fetch the results given the B<mbid> (MusicBrainz ID), B<endpoint> and optional
-B<query> arguments.
+Fetch the results given a B<mbid> (MusicBrainz recording ID), B<endpoint> and
+optional B<query> arguments.
 
 =cut
 
@@ -75,6 +77,9 @@ sub fetch {
     if ( $args{query} ) {
         $query = join '&', map { "$_=$args{query}->{$_}" } keys %{ $args{query} };
     }
+
+    croak 'No mbid provided' unless $args{mbid};
+    croak 'No endpoint provided' unless $args{endpoint};
 
     my $url = $self->base . '/'. $args{mbid} . '/'. $args{endpoint};
     $url .= '?' . $query
