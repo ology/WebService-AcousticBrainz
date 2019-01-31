@@ -8,8 +8,7 @@ use Try::Tiny qw(try catch);
 
 use_ok 'WebService::AcousticBrainz';
 
-my $ws = WebService::AcousticBrainz->new;
-isa_ok $ws, 'WebService::AcousticBrainz';
+my $ws = new_ok 'WebService::AcousticBrainz';
 
 my $data = try { $ws->fetch() } catch { $_ };
 like $data, qr/No mbid provided/, 'fetch with no mbid';
