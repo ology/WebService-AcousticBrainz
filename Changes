@@ -1,6 +1,8 @@
 Revision history for WebService-AcousticBrainz
 
 {{$NEXT}}
+
+0.0400 2019-01-29 23:47:38
     - Improve documentation.
     - Add tests for incomplete fetch() arguments.
 
