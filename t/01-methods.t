@@ -28,7 +28,7 @@ $ws->ua->server->app($mock); # point our UserAgent to our new mock server
 
 $ws->base(Mojo::URL->new(''));
 
-can_ok($ws, 'fetch');
+can_ok $ws, 'fetch';
 
 $data = try {
     $ws->fetch(
