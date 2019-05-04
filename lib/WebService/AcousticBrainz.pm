@@ -2,7 +2,7 @@ package WebService::AcousticBrainz;
 
 # ABSTRACT: Access to the AcousticBrainz API
 
-our $VERSION = '0.0400';
+our $VERSION = '0.0401';
 
 use Moo;
 use strictures 2;
@@ -13,6 +13,7 @@ use Mojo::UserAgent;
 use Mojo::JSON::MaybeXS;
 use Mojo::JSON qw( decode_json );
 use Mojo::URL;
+use Try::Tiny;
 
 =head1 SYNOPSIS
 
@@ -102,10 +103,10 @@ sub _handle_response {
 
     if ( $res->is_success ) {
         my $body = $res->body;
-        if ( $body =~ /{/ ) {
+        try {
             $data = decode_json( $res->body );
         }
-        else {
+        catch {
             croak $body, "\n";
         }
     }
