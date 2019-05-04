@@ -24,7 +24,8 @@ $mock->routes->get(
         my $n = $c->param('n');
         return $c->render( status => 200, json => { ok => 1 } ) if $n eq 2;
         return $c->render( status => 400, text => 'Missing values' );
-    } );
+    }
+);
 $ws->ua->server->app($mock); # point our UserAgent to our new mock server
 
 $ws->base( Mojo::URL->new('') );
