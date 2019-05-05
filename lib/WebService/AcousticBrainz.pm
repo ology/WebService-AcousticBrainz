@@ -104,7 +104,7 @@ sub _handle_response {
     if ( $res->is_success ) {
         my $body = $res->body;
         try {
-            $data = decode_json( $res->body );
+            $data = decode_json($body);
         }
         catch {
             croak $body, "\n";
