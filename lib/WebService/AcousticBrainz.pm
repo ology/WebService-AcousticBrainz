@@ -108,7 +108,7 @@ sub _handle_response {
         }
         catch {
             croak $body, "\n";
-        }
+        };
     }
     else {
         croak "Connection error: ", $res->message;
