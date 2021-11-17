@@ -1,6 +1,9 @@
 Revision history for WebService-AcousticBrainz
 
 {{$NEXT}}
+    - Fix Mojo::URL usage in the module code.
+
+0.0500 2021-11-17 10:00:36
     - Fix up code!
     - Improve tests.
 
