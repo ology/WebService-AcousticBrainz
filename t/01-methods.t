@@ -1,20 +1,22 @@
 #!perl
 use Test::More;
+use Test::Exception;
 
 use Mojo::Base -strict;
 use Mojolicious;
-
-use Try::Tiny qw(try catch);
 
 use_ok 'WebService::AcousticBrainz';
 
 my $ws = new_ok 'WebService::AcousticBrainz';
 
-my $data = try { $ws->fetch() } catch { $_ };
-like $data, qr/No mbid provided/, 'fetch with no mbid';
+throws_ok { $ws->fetch }
+    qr/No mbid provided/, 'fetch with no mbid';
 
-$data = try { $ws->fetch( mbid => 1234 ) } catch { $_ };
-like $data, qr/No endpoint provided/, 'fetch with no endpoint';
+throws_ok { $ws->fetch( mbid => 1234 ) }
+    qr/No endpoint provided/, 'fetch with no endpoint';
+
+throws_ok { $ws->fetch( mbid => 1234, endpoint => 'foo' ) }
+    qr/No query provided/, 'fetch with no query';
 
 my $mock = Mojolicious->new;
 $mock->log->level('fatal'); # only log fatal errors to keep the server quiet
@@ -29,16 +31,14 @@ $ws->ua->server->app($mock); # point our UserAgent to our new mock server
 
 $ws->base( Mojo::URL->new('') );
 
-can_ok $ws, 'fetch';
-
-try {
-    $data = $ws->fetch(
+my $got;
+lives_ok {
+    $got = $ws->fetch(
         mbid     => '1234567890',
         endpoint => 'low-level',
         query    => { n => 2 },
     );
-}
-catch { $_ };
-is_deeply $data, { ok => 1 }, 'fetch';
+} 'fetch lives';
+is_deeply $got, { ok => 1 }, 'fetch';
 
 done_testing();
