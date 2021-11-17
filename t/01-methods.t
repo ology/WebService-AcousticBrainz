@@ -20,8 +20,7 @@ throws_ok { $ws->fetch( mbid => 1234, endpoint => 'foo' ) }
 
 my $mock = Mojolicious->new;
 $mock->log->level('fatal'); # only log fatal errors to keep the server quiet
-$mock->routes->get(
-    '/1234567890/low-level' => sub {
+$mock->routes->get('/api/v1/1234567890/low-level' => sub {
         my $c = shift;
         is $c->param('n'), 2, 'n param';
         return $c->render( status => 200, json => { ok => 1 } );
