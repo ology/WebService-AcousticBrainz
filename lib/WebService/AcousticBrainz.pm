@@ -35,13 +35,13 @@ C<WebService::AcousticBrainz> provides access to the L<https://acousticbrainz.or
 
 =head2 base
 
-The base URL.  Default: https://acousticbrainz.org/api/v1
+The base URL.  Default: https://acousticbrainz.org
 
 =cut
 
 has base => (
     is      => 'rw',
-    default => sub { 'https://acousticbrainz.org/api/v1' },
+    default => sub { 'https://acousticbrainz.org' },
 );
 
 =head2 ua
@@ -80,7 +80,7 @@ sub fetch {
     croak 'No query provided' unless $args{query};
 
     my $url = Mojo::URL->new($self->base)
-        ->path($args{mbid} . '/'. $args{endpoint})
+        ->path('/api/v1/' . $args{mbid} . '/'. $args{endpoint})
         ->query(%{ $args{query} });
 
     my $tx = $self->ua->get($url);
