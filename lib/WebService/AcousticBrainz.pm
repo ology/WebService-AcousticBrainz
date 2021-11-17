@@ -10,7 +10,6 @@ use namespace::clean;
 
 use Carp;
 use Mojo::UserAgent;
-use Mojo::JSON::MaybeXS;
 use Mojo::JSON qw( decode_json );
 use Mojo::URL;
 use Try::Tiny;
@@ -57,13 +56,13 @@ has ua => (
 
 =head1 METHODS
 
-=head2 new()
+=head2 new
 
   $w = WebService::AcousticBrainz->new;
 
 Create a new C<WebService::AcousticBrainz> object.
 
-=head2 fetch()
+=head2 fetch
 
   $r = $w->fetch(%arguments);
 
@@ -118,14 +117,18 @@ __END__
 
 =head1 SEE ALSO
 
+The F<t/*> tests
+
+The F<eg/*> programs
+
+L<https://acousticbrainz.org/data>
+
 L<Moo>
 
 L<Mojo::UserAgent>
 
 L<Mojo::JSON>
 
-L<Mojo::JSON::MaybeXS>
-
-L<https://acousticbrainz.org/data>
+L<Try::Tiny>
 
 =cut
