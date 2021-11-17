@@ -29,7 +29,7 @@ $mock->routes->get(
 );
 $ws->ua->server->app($mock); # point our UserAgent to our new mock server
 
-$ws->base( Mojo::URL->new('') );
+$ws->base('');
 
 my $got;
 lives_ok {
