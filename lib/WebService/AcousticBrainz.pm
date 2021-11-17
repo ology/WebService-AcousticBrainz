@@ -41,7 +41,7 @@ The base URL.  Default: https://acousticbrainz.org/api/v1
 
 has base => (
     is      => 'rw',
-    default => sub { Mojo::URL->new('https://acousticbrainz.org/api/v1') },
+    default => sub { 'https://acousticbrainz.org/api/v1' },
 );
 
 =head2 ua
@@ -75,17 +75,13 @@ optional B<query> arguments.
 sub fetch {
     my ( $self, %args ) = @_;
 
-    my $query;
-    if ( $args{query} ) {
-        $query = join '&', map { "$_=$args{query}->{$_}" } keys %{ $args{query} };
-    }
-
     croak 'No mbid provided' unless $args{mbid};
     croak 'No endpoint provided' unless $args{endpoint};
+    croak 'No query provided' unless $args{query};
 
-    my $url = $self->base . '/'. $args{mbid} . '/'. $args{endpoint};
-    $url .= '?' . $query
-        if $query;
+    my $url = Mojo::URL->new($self->base)
+        ->path($args{mbid} . '/'. $args{endpoint})
+        ->query(%{ $args{query} });
 
     my $tx = $self->ua->get($url);
 
