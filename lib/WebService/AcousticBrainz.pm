@@ -2,7 +2,7 @@ package WebService::AcousticBrainz;
 
 # ABSTRACT: Access to the AcousticBrainz API
 
-our $VERSION = '0.0402';
+our $VERSION = '0.0500';
 
 use Moo;
 use strictures 2;
