@@ -1,7 +1,8 @@
 Revision history for WebService-AcousticBrainz
 
 {{$NEXT}}
-    - Clean up code a bit.
+    - Fix up code!
+    - Improve tests.
 
 0.0401 2019-05-04 19:52:51
     - Tidied test code.
