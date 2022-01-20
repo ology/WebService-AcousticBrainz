@@ -2,7 +2,7 @@ package WebService::AcousticBrainz;
 
 # ABSTRACT: Access to the AcousticBrainz API
 
-our $VERSION = '0.0600';
+our $VERSION = '0.0601';
 
 use Moo;
 use strictures 2;
@@ -23,7 +23,7 @@ use Try::Tiny;
   my $r = $w->fetch(
     mbid     => 'c51f788f-f2ac-4d4e-aa72-205f002b8752',
     endpoint => 'low-level',
-    query    => { n => 2 },
+    query    => { n => 2 }, # optional
   );
 
 =head1 DESCRIPTION
@@ -76,11 +76,10 @@ sub fetch {
 
     croak 'No mbid provided' unless $args{mbid};
     croak 'No endpoint provided' unless $args{endpoint};
-    croak 'No query provided' unless $args{query};
 
     my $url = Mojo::URL->new($self->base)
-        ->path('/api/v1/' . $args{mbid} . '/'. $args{endpoint})
-        ->query(%{ $args{query} });
+        ->path('/api/v1/' . $args{mbid} . '/'. $args{endpoint});
+    $url->query(%{ $args{query} }) if $args{query};
 
     my $tx = $self->ua->get($url);
 
@@ -122,6 +121,8 @@ The F<t/*> tests
 The F<eg/*> programs
 
 L<https://acousticbrainz.org/data>
+
+L<https://acousticbrainz.readthedocs.io/api.html>
 
 L<Moo>
 
