@@ -2,7 +2,7 @@ package WebService::AcousticBrainz;
 
 # ABSTRACT: Access to the AcousticBrainz API
 
-our $VERSION = '0.0601';
+our $VERSION = '0.0602';
 
 use strictures 2;
 use Carp qw(croak);
